@@ -1,0 +1,8 @@
+*.txt
+logo.png
+*.zip
+.DS_Store
+.idea
+.lift
+.vscode
+*.iml
