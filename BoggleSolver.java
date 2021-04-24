@@ -1,12 +1,13 @@
-import java.util.LinkedList;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.TST;
 
+import java.util.LinkedList;
+
 public class BoggleSolver {
 
-    private final TST<Integer> dict = new TST<Integer>();
+    private final Dictionary<Integer> dict = new Dictionary<Integer>();
     private BoggleBoard bb;
 
     public BoggleSolver(String[] dictionary) {
@@ -46,9 +47,9 @@ public class BoggleSolver {
         } else {
             acc.append(letter);
         }
-        Queue<String> matchedStrings = (Queue<String>) dict.keysWithPrefix(acc.toString());
-        if (matchedStrings.isEmpty()) {
-            acc.setLength(acc.length()-ll);
+        if (!dict.keysWithPrefix(acc.toString())) 
+        {
+            acc.deleteCharAt(acc.length()-ll);
             return;
         } 
         if (acc.toString().length() > 2 && dict.contains(acc.toString()) && !result.contains(acc.toString())) { 
@@ -62,7 +63,7 @@ public class BoggleSolver {
             }
         }
         marked[v[0]][v[1]] = false;
-        acc.setLength(acc.length()-ll);
+        acc.deleteCharAt(acc.length()-ll);
     }
 
     public int scoreOf(String word) {
@@ -102,12 +103,22 @@ public class BoggleSolver {
         BoggleSolver solver = new BoggleSolver(dictionary);
         BoggleBoard board = new BoggleBoard(args[1]);
         int score = 0;
-        solver.getAllValidWords(board);
         for (String word : solver.getAllValidWords(board)) {
-        StdOut.println(word);
-        score += solver.scoreOf(word);
+            StdOut.println(word);
+            score += solver.scoreOf(word);
         }
         StdOut.println("Score = " + score);
+        // In in = new In(args[0]);
+        // String[] dictionary = in.readAllStrings();
+        // BoggleSolver solver = new BoggleSolver(dictionary);
+        // long t = System.currentTimeMillis();
+        // long end = t + 1000;
+        // int n = 0;
+        // while (System.currentTimeMillis() < end) {
+        //     BoggleBoard board = new BoggleBoard();
+        //     solver.getAllValidWords(board);
+        //     n++;
+        // }
+        // StdOut.println("Score = " + n);
     }
-
 }
