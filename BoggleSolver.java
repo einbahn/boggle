@@ -1,10 +1,10 @@
-import java.util.LinkedList;
-
 import edu.princeton.cs.algs4.Alphabet;
 import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.TST;
+import edu.princeton.cs.algs4.Queue; 
+
+import java.util.LinkedList;
 
 public class BoggleSolver {
 
@@ -14,6 +14,7 @@ public class BoggleSolver {
     public BoggleSolver(String[] dictionary) {
         if (dictionary == null)
             throw new IllegalArgumentException("Constructor argument is null");
+        dict = new TrieSET(Alphabet.UPPERCASE);
         
         for (String word : dictionary) {
             dict.add(word);
@@ -48,8 +49,8 @@ public class BoggleSolver {
         } else {
             acc.append(letter);
         }
-        Queue<String> matchedStrings = (Queue<String>) dict.keysWithPrefix(acc.toString());
-        if (matchedStrings.isEmpty()) {
+        if (((Queue<String>) dict.keysWithPrefix(acc.toString())).isEmpty()) 
+        {
             acc.setLength(acc.length()-ll);
             return;
         } 
@@ -116,5 +117,17 @@ public class BoggleSolver {
             score++;
         }
         StdOut.println("Score = " + score);
+        // In in = new In(args[0]);
+        // String[] dictionary = in.readAllStrings();
+        // BoggleSolver solver = new BoggleSolver(dictionary);
+        // long t = System.currentTimeMillis();
+        // long end = t + 1000;
+        // int n = 0;
+        // while (System.currentTimeMillis() < end) {
+        //     BoggleBoard board = new BoggleBoard();
+        //     solver.getAllValidWords(board);
+        //     n++;
+        // }
+        // StdOut.println("Score = " + n);
     }
 }
