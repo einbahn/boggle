@@ -1,21 +1,23 @@
+import edu.princeton.cs.algs4.Alphabet;
 import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.TST;
+import edu.princeton.cs.algs4.Queue; 
 
 import java.util.LinkedList;
 
 public class BoggleSolver {
 
-    private final Dictionary<Integer> dict = new Dictionary<Integer>();
+    private final TrieSET dict; 
     private BoggleBoard bb;
 
     public BoggleSolver(String[] dictionary) {
         if (dictionary == null)
             throw new IllegalArgumentException("Constructor argument is null");
+        dict = new TrieSET(Alphabet.UPPERCASE);
         
         for (String word : dictionary) {
-            dict.put(word, 0);
+            dict.add(word);
         }
     }
 
@@ -47,9 +49,9 @@ public class BoggleSolver {
         } else {
             acc.append(letter);
         }
-        if (!dict.keysWithPrefix(acc.toString())) 
+        if (((Queue<String>) dict.keysWithPrefix(acc.toString())).isEmpty()) 
         {
-            acc.deleteCharAt(acc.length()-ll);
+            acc.setLength(acc.length()-ll);
             return;
         } 
         if (acc.toString().length() > 2 && dict.contains(acc.toString()) && !result.contains(acc.toString())) { 
@@ -63,7 +65,7 @@ public class BoggleSolver {
             }
         }
         marked[v[0]][v[1]] = false;
-        acc.deleteCharAt(acc.length()-ll);
+        acc.setLength(acc.length()-ll);
     }
 
     public int scoreOf(String word) {
