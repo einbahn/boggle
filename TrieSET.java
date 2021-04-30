@@ -43,6 +43,8 @@ public class TrieSET implements Iterable<String> {
 
     private Node root;      // root of trie
     private int n;          // number of keys in trie
+    private Node prev;
+    private int prevlen = -1;
 
     // R-way trie node
     private class Node {
@@ -139,8 +141,16 @@ public class TrieSET implements Iterable<String> {
      */
     public Iterable<String> keysWithPrefix(String prefix) {
         Queue<String> results = new Queue<String>();
-        Node x = get(root, prefix, 0);
-        collect(x, new StringBuilder(prefix), results);
+        prevlen = prefix.length();
+        if (prefix.length() == prevlen + 1) {
+            Node x = get(prev, prefix, prevlen);
+            prev = x;
+            collect(x, new StringBuilder(prefix), results);
+        }  else {
+            Node x = get(root, prefix, 0);
+            prev = x;
+            collect(x, new StringBuilder(prefix), results);
+        } 
         return results;
     }
 

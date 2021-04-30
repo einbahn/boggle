@@ -14,7 +14,6 @@ public class BoggleSolver {
     public BoggleSolver(String[] dictionary) {
         if (dictionary == null)
             throw new IllegalArgumentException("Constructor argument is null");
-        dict = new TrieSET(Alphabet.UPPERCASE);
         
         for (String word : dictionary) {
             dict.add(word);
@@ -103,31 +102,14 @@ public class BoggleSolver {
         In in = new In(args[0]);
         String[] dictionary = in.readAllStrings();
         BoggleSolver solver = new BoggleSolver(dictionary);
-        int score = 0;
-        // BoggleBoard board = new BoggleBoard(args[1]);
-        // solver.getAllValidWords(board);
-        // for (String word : solver.getAllValidWords(board)) {
-        // StdOut.println(word);
-        // score += solver.scoreOf(word);
-        // }
-        long start = System.currentTimeMillis();
-        while (System.currentTimeMillis() < start + 1000) {
-            BoggleBoard bb = new BoggleBoard();
-            solver.getAllValidWords(bb);
-            score++;
+        long t = System.currentTimeMillis();
+        long end = t + 1000;
+        int n = 0;
+        while (System.currentTimeMillis() < end) {
+            BoggleBoard board = new BoggleBoard();
+            solver.getAllValidWords(board);
+            n++;
         }
-        StdOut.println("Score = " + score);
-        // In in = new In(args[0]);
-        // String[] dictionary = in.readAllStrings();
-        // BoggleSolver solver = new BoggleSolver(dictionary);
-        // long t = System.currentTimeMillis();
-        // long end = t + 1000;
-        // int n = 0;
-        // while (System.currentTimeMillis() < end) {
-        //     BoggleBoard board = new BoggleBoard();
-        //     solver.getAllValidWords(board);
-        //     n++;
-        // }
-        // StdOut.println("Score = " + n);
+        StdOut.println("Score = " + n);
     }
 }
